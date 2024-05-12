@@ -1,8 +1,11 @@
+# posts_controller.rb
+
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
-  
+  before_action :set_post, only: [:show, :edit, :update]
+
   def index
-    @posts = Post.all.order('created_at DESC')
+    @posts = Post.where(online: true).order('created_at DESC')
   end
 
   def new
@@ -20,32 +23,29 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    # Utilisation du before_action :set_post
   end
 
   def edit
-    @post = Post.find(params[:id])
+    # Utilisation du before_action :set_post
   end
 
   def update
-    @post = Post.find(params[:id])
-
-    if @post.update(params[:post].permit(:title, :body))
-      redirect_to @post
+    if @post.update(post_params)
+      redirect_to @post, notice: 'Post was successfully updated.'
     else
-      render 'edit'
+      render :edit
     end
-  end
-
-  def destroy
-    @post = Post.find(params[:id])
-    @post.destroy
-
-    redirect_to root_path
   end
 
   private
-    def post_params
-      params.require(:post).permit(:title, :body)
-    end
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :body, :online)
+  end
 end
+

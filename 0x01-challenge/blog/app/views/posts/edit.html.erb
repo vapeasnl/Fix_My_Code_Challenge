@@ -1,6 +1,21 @@
-<div id="page_wrapper">
-  <h1>Edit Post</h1>
+<!-- edit.html.erb -->
 
-  <%= render 'form' %>
+<%= form_for @post do |f| %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
 
-</div>
+  <div class="field">
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= f.label :online %>
+    <%= f.check_box :online %>
+  </div>
+
+  <%= f.submit %>
+<% end %>
+
