@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 class Square():
-    
     side_length = 0
 
     def __init__(self, *args, **kwargs):
